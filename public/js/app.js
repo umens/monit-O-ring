@@ -1,5 +1,10 @@
-// public/js/app.js
-angular.module('monitApp', ['ngRoute', 'appRoutes', 'btford.socket-io', 'MainCtrl', 'ServerCtrl', 'ServerService']).
-factory('mySocket', function (socketFactory) {
-  return socketFactory();
-});;
+'use strict';
+
+(function () {
+    angular.module('monitApp', [
+      'ui.router',                // Angular flexible routing
+      'ui.bootstrap',             // AngularJS native directives for Bootstrap
+      'ngAnimate',                 // Angular animations
+      'btford.socket-io',
+  ])
+})();

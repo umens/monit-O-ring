@@ -6,18 +6,22 @@ module.exports.connect = function(io){
     io.on('connection', function (socket) {
         var db_host = null;
 
-        socket.on('resources', function(data) {
-            Host.update({ _id: db_host._id }, { uptime: data.uptime, lastTimeUp: Date.now(), status: true });
-            var datas = new Data({ 
-                host: db_host._id,
-                cpu: data.cpu,
-                totalMemory: data.totalMemory,
-                freeMemory: data.freeMemory,
-                usedMemory: data.usedMemory,
-                uptime: data.uptime
-            });
-            datas.save(function(err) {
-                if (err) throw err;
+        socket.on('ressources', function(data) {
+            Host.findOne({ name: data.hostname }, function (err, host) {
+                db_host = host;
+                Host.update({ _id: db_host._id }, { uptime: data.uptime, lastTimeUp: Date.now(), status: true });
+                var datas = new Data({ 
+                    host: db_host._id,
+                    cpu: data.cpu,
+                    totalMemory: data.totalMemory,
+                    freeMemory: data.freeMemory,
+                    usedMemory: data.usedMemory,
+                    uptime: data.uptime
+                });
+                datas.save(function(err) {
+                    if (err) throw err;
+                    socket.broadcast.emit('ressources', {host: db_host, datas: data});
+                });
             });
         });
 
@@ -39,8 +43,9 @@ module.exports.connect = function(io){
                         datas.save(function(err) {
                             if (err) throw err;
                         });
+                        console.log('existing server');
+                        socket.broadcast.emit('ehlo', {host: db_host});
                     });
-                    console.log('existing server');
                 }
                 else{
                     db_host = new Host({ 'name': data.hostname, 'uptime': data.uptime });
@@ -50,9 +55,9 @@ module.exports.connect = function(io){
                         datas.save(function(err) {
                             if (err) throw err;
                         });
+                        console.log('new server add');
+                        socket.broadcast.emit('ehlo', {host: db_host});
                     });
-                    console.log('new server add');
-                    socket.emit('ehlo', {host: db_host, datas: data});
                 }
             });
         });

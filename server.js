@@ -9,6 +9,7 @@ var socket         = require('./socket').connect(io);
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var mongoose       = require('mongoose');
+var morgan         = require('morgan');  
 
 // configuration ===========================================
     
@@ -27,8 +28,11 @@ mongoose.connect(db.url, function(err) {
   	}
 });
 
+
+app.use(morgan('dev')); 
+
 // get all data/stuff of the body (POST) parameters
-// parse application/json 
+// parse application/json
 app.use(bodyParser.json()); 
 
 // parse application/vnd.api+json as json

@@ -1,8 +1,8 @@
 // app/routes.js
 
 // grab the nerd model we just created
-var Memory = require('./models/data');
-var Host = require('./models/host');
+var Data = require('./models/data');
+var Host   = require('./models/host');
 var path   = require('path');
 
 module.exports = function(app) {
@@ -13,19 +13,22 @@ module.exports = function(app) {
 
     // sample api route
     app.get('/api/servers', function(req, res) {
-        // use mongoose to get all nerds in the database
-        Host.find(function(err, servers) {
-
-            // if there is an error retrieving, send the error. 
-                            // nothing after res.send(err) will execute
+        var hosts = [];
+        Host.find().exec( function(err, hosts) {
+            // servers.forEach(function(entry) {
+            //     Data.find({'host': entry._id}).sort( { added: -1 } ).limit( 1 ).populate('host').exec( function ( err, data ){
+            //         hosts.push(data);
+            //     });
+            // });
             if (err)
                 res.send(err);
-
-            res.json(servers); // return all nerds in JSON format
+            res.json(hosts); // return all hosts in JSON format
         });
     });
+
     app.get('/api/server/:id', function(req, res) {
-        // use mongoose to get all nerds in the database
+        //req.params.id
+        // use mongoose to get all hosts in the database
         Host.find(function(err, servers) {
 
             // if there is an error retrieving, send the error. 
@@ -33,7 +36,7 @@ module.exports = function(app) {
             if (err)
                 res.send(err);
 
-            res.json(servers); // return all nerds in JSON format
+            res.json(servers); // return all hosts in JSON format
         });
     });
 
