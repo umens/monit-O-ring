@@ -136,4 +136,5 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
-public/libs/*
+/public/*
+/front_src/components/*

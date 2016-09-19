@@ -8,7 +8,15 @@
         <title page-title></title>
 
         <!-- STYLES -->
-        <link rel="stylesheet" href="lib/css/main.min.css"/>
+        <!-- build:css lib/css/main.min.css -->
+        <link rel="stylesheet" type="text/css" href="components/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="components/font-awesome/css/font-awesome.min.css" />
+        <link rel="stylesheet" type="text/css" href="components/toastr/toastr.min.css" />
+        <link rel="stylesheet" type="text/css" href="components/animate.css/animate.min.css" />
+        <link rel="stylesheet" type="text/css" href="components/bootstrap-social/bootstrap-social.css" />
+        <link rel="stylesheet" type="text/css" href="components/rdash-ui/dist/css/rdash.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/custom.css"> <!-- custom styles -->
+        <!-- endbuild -->
     </head>
     <body ng-controller="MasterCtrl">
     <!-- <body> -->
@@ -106,7 +114,19 @@
     
         <!-- SCRIPTS -->
         <script type="text/javascript" src="/socket.io/socket.io.js"></script>
-        <script src="lib/js/main.min.js"></script>
+        <!-- build:js lib/js/main.min.js -->
+        <script type="text/javascript" src="components/jquery/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="components/angular/angular.min.js"></script>
+        <script type="text/javascript" src="components/angular-animate/angular-animate.min.js"></script>
+        <script type="text/javascript" src="components/angular-ui-router/release/angular-ui-router.min.js"></script>
+        <script type="text/javascript" src="components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script type="text/javascript" src="components/angular-cookies/angular-cookies.min.js"></script>
+        <script type="text/javascript" src="components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="components/angular-socket-io/socket.js"></script>
+        <script type="text/javascript" src="components/toastr/toastr.min.js"></script>
+        <script type="text/javascript" src="components/moment/min/moment-with-locales.min.js"></script>
+        <script type="text/javascript" src="components/moment-precise-range/moment-precise-range.js"></script>
+        <!-- endbuild -->
         <!-- Custom Scripts -->
         <script type="text/javascript" src="js/dashboard.min.js"></script>
 

@@ -8,15 +8,20 @@ module.exports.connect = function(io){
 
         socket.on('ressources', function(data) {
             Host.findOne({ name: data.hostname }, function (err, host) {
+                host.uptime = data.uptime;
+                host.lastTimeUp = Date.now();
+                host.status = true;
                 db_host = host;
-                Host.update({ _id: db_host._id }, { uptime: data.uptime, lastTimeUp: Date.now(), status: true });
+                host.save(function(err) {
+                    if (err) throw err;
+                });
+                //Host.update({ _id: db_host._id }, { uptime: data.uptime, lastTimeUp: Date.now(), status: true });
                 var datas = new Data({ 
                     host: db_host._id,
                     cpu: data.cpu,
                     totalMemory: data.totalMemory,
                     freeMemory: data.freeMemory,
-                    usedMemory: data.usedMemory,
-                    uptime: data.uptime
+                    usedMemory: data.usedMemory
                 });
                 datas.save(function(err) {
                     if (err) throw err;
@@ -32,13 +37,18 @@ module.exports.connect = function(io){
                     cpu: data.cpu,
                     totalMemory: data.totalMemory,
                     freeMemory: data.freeMemory,
-                    usedMemory: data.usedMemory,
-                    uptime: data.uptime
+                    usedMemory: data.usedMemory
                 });
                 if(count == 1){
                     Host.findOne({ name: data.hostname }, function (err, host) {
-                        Host.update({ _id: host._id }, { uptime: data.uptime, lastTimeUp: Date.now(), status: true });
-                        db_host = host
+                        host.uptime = data.uptime;
+                        host.lastTimeUp = Date.now();
+                        host.status = true;
+                        db_host = host;
+                        host.save(function(err) {
+                            if (err) throw err;
+                        });
+                        //Host.update({ _id: db_host._id }, { uptime: data.uptime, lastTimeUp: Date.now(), status: true });
                         datas.host = host._id;
                         datas.save(function(err) {
                             if (err) throw err;

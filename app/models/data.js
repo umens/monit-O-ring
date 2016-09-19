@@ -10,7 +10,6 @@ var dataSchema = mongoose.Schema({
     totalMemory: Number,
     freeMemory: Number,
     usedMemory: Number,
-    uptime: Number,
     added : { type: Date, default: Date.now },
 });
 

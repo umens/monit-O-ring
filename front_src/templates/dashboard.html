@@ -1,0 +1,22 @@
+<div class="row" ng-repeat="rows in displayableHosts">
+  	<div class="col-md-4" ng-repeat="host in rows">
+  		<div class="card">
+            <div class="card-image" ng-class="host.status ? 'bg-success' : 'bg-danger'">
+                <img class="img-responsive" src="img/server.png">
+                <span class="card-title"></span>
+            </div>
+            
+            <div class="card-content">
+                <ul class="list-unstyled">
+                    <li><a class="title-server-link" href="{{ host.name | makeUrl }}">{{ host.name }} <i class="fa fa-external-link" aria-hidden="true"></i></a></li>
+                    <li>Dernier contact : {{ host.lastTimeUp | date:'dd/MM/yyyy @ HH:mm:ssa'}}</li>
+                     <li ng-if="host.status">Uptime : {{ host.uptime*1000 | timeago }}</li>
+                </ul>
+            </div>
+            
+            <div class="card-action">
+                <a ui-sref="server_details">See More</a>
+            </div>
+        </div>
+    </div>
+</div>

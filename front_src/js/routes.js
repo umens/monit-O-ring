@@ -6,37 +6,27 @@ function configState($stateProvider, $urlRouterProvider, $compileProvider) {
     // Set default state
     $urlRouterProvider.otherwise("/");
     $stateProvider
-
         // App views - listing
-        .state('app_views', {
+        .state('home', {
             url: "/",
-            templateUrl: 'views/home.html',
+            templateUrl: 'templates/dashboard.html',
             controller: 'MainCtrl',
             data: {
                 pageTitle: 'Servers View'
             }
         })
         // details
-        .state('app_views.server', {
+        .state('server', {
             url: "/server",
-            templateUrl: "views/server.html",
+            templateUrl: "templates/server.html",
             controller: 'ServerCtrl',
             data: {
-                pageTitle: 'Details',
+                pageTitle: 'Details'
             }
         })
-}
-
-angular
-    .module('monitApp')
-    .config(configState);
-
-// Toastr options
-toastr.options = {
-    "debug": false,
-    "preventDuplicates": true,
-    "newestOnTop": false,
-    "positionClass": "toast-top-center",
-    "closeButton": true,
-    "toastClass": "animated fadeInDown",
 };
+
+/**
+ * Route configuration for the monitModule module.
+ */
+angular.module('monitApp').config(configState);

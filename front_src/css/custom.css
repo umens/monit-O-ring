@@ -23,7 +23,6 @@
   border-radius: 2px 2px 0 0;
   background-clip: padding-box;
   position: relative;
-  z-index: -1;
   height: 175px;
   margin: 5px auto;
 }
@@ -39,9 +38,13 @@
   background-clip: padding-box;
   box-sizing: border-box;
 }
+
 .card .card-content p {
   margin: 0;
   color: inherit;
+}
+.card .card-content .title-server-link{
+  font-size: 20px;
 }
 .card .card-content span.card-title {
   line-height: 48px;

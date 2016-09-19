@@ -10,7 +10,7 @@ function MainController($scope, socket, $http) {
     $scope.displayableHosts = [];
 
     $scope.$watch('hosts', function(newValue, oldValue){
-        var size = 4;
+        var size = 3;
         var newArr = [];
         for (var i=0; i<newValue.length; i+=size) {
             newArr.push(newValue.slice(i, i+size));
@@ -26,10 +26,22 @@ function MainController($scope, socket, $http) {
     .error(function(data) {
         console.log('Error: ' + data);
     });
+
+    setInterval(function() {
+
+        $http.get('/api/servers')
+        .success(function(data) {
+            $scope.hosts = data;
+        })
+        .error(function(data) {
+            console.log('Error: ' + data);
+        });
+
+    }, 15000);
   
-    socket.on('ressources', function (data) {
-      	console.log(data);
-    });
+    // socket.on('ressources', function (data) {
+    //   	console.log(data);
+    // });
 
     socket.on('ehlo', function (data) {
         if(!foundInArray(data.host.name)){
