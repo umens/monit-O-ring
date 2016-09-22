@@ -3,9 +3,8 @@ angular
     .module('monitApp')
     .controller('MainCtrl', MainController);
 
-function MainController($scope, socket, $http) { 
+function MainController($scope, socket, $http, CONFIG) { 
 
-    $scope.tagline = 'To the moon and back!';
     $scope.hosts = [];
     $scope.displayableHosts = [];
 
@@ -17,6 +16,10 @@ function MainController($scope, socket, $http) {
         }
         $scope.displayableHosts = newArr;
     });
+  
+    socket.on('ressources', function (data) {
+      	console.log(data);
+    });
 
     // when landing on the page, get all todos and show them
     $http.get('/api/servers')
@@ -27,25 +30,24 @@ function MainController($scope, socket, $http) {
         console.log('Error: ' + data);
     });
 
-    setInterval(function() {
-
-        $http.get('/api/servers')
-        .success(function(data) {
-            $scope.hosts = data;
-        })
-        .error(function(data) {
-            console.log('Error: ' + data);
-        });
-
-    }, 15000);
-  
-    // socket.on('ressources', function (data) {
-    //   	console.log(data);
-    // });
+    socket.on('serves_refresh', function (data) {
+      	$scope.hosts = data;
+    });
 
     socket.on('ehlo', function (data) {
         if(!foundInArray(data.host.name)){
             $scope.hosts.push(data.host);
+        }
+    });
+
+    socket.on('lost_connection', function (data) {
+        if(foundInArray(data.host)){
+            swal({
+			  	title: 'Server Down!',
+			  	text: data.host+' just crash ! Fix it ASAP.',
+			  	timer: 10000,
+			  	type: 'error',
+			})
         }
     });
 

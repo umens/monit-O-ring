@@ -1,31 +1,34 @@
 {
-    "name": "Monit-O-Ring",
-    "description": "Dashboard server monitoring with a MEAN Stack",
-    "homepage": "https://github.com/umens/monit-O-ring",
-    "authors": [
-        "Mensa Ulysse <ulysse.mensa@free.fr>"
-    ],
-    "version": "1.0.0",
-    "dependencies": {
-        "bootstrap": "latest",
-        "font-awesome": "latest",
-        "animate.css": "latest",
-        "angular": "latest",
-        "jquery": "^3.1.0",
-        "jquery-knob": "^1.2.13",
-        "angular-socket-io": "^0.7.0",
-        "angular-animate": "^1.5.8",
-        "angular-bootstrap": "^2.1.3",
-        "angular-ui-router": "^0.3.1",
-        "toastr": "^2.1.3",
-        "bootstrap-social": "^5.0.0",
-        "moment": "^2.14.1",
-        "moment-precise-range": "https://github.com/codebox/moment-precise-range.git",
-        "rdash-ui": "1.0.*",
-        "angular-cookies": "~1.5.0"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/umens/monit-O-ring"
-    }
+  "name": "Monit-O-Ring",
+  "description": "Dashboard server monitoring with a MEAN Stack",
+  "homepage": "https://github.com/umens/monit-O-ring",
+  "authors": [
+    "Mensa Ulysse <ulysse.mensa@free.fr>"
+  ],
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "latest",
+    "font-awesome": "latest",
+    "animate.css": "latest",
+    "angular": "latest",
+    "jquery": "^3.1.0",
+    "jquery-knob": "^1.2.13",
+    "angular-socket-io": "^0.7.0",
+    "angular-animate": "^1.5.8",
+    "angular-bootstrap": "^2.1.3",
+    "angular-ui-router": "^0.3.1",
+    "toastr": "^2.1.3",
+    "bootstrap-social": "^5.0.0",
+    "moment": "^2.14.1",
+    "moment-precise-range": "https://github.com/codebox/moment-precise-range.git",
+    "rdash-ui": "1.0.*",
+    "angular-cookies": "~1.5.0",
+    "sweetalert2": "^5.0.3",
+    "chart.js": "^2.2.2",
+    "angular-chart.js": "^1.0.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/umens/monit-O-ring"
+  }
 }

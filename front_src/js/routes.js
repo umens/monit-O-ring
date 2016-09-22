@@ -4,29 +4,64 @@ function configState($stateProvider, $urlRouterProvider, $compileProvider) {
     $compileProvider.debugInfoEnabled(true);
 
     // Set default state
-    $urlRouterProvider.otherwise("/");
+    $urlRouterProvider.otherwise("/login");
     $stateProvider
+        // login
+        .state('login', {
+            url: "/login",
+            templateUrl: "templates/login.html",
+            controller: 'LoginCtrl',
+            data: {
+                pageTitle: 'Login'
+            }
+        })
+    	.state('dashboard', { 
+    		url: '/dashboard',
+    		controller: 'MasterCtrl',
+    		templateUrl: 'templates/dashboard.html',
+    	})
         // App views - listing
-        .state('home', {
-            url: "/",
-            templateUrl: 'templates/dashboard.html',
+        .state('overview', {
+            url: "/overview",
+            parent: 'dashboard',
+            templateUrl: 'templates/dashboard/overview.html',
             controller: 'MainCtrl',
             data: {
-                pageTitle: 'Servers View'
+                pageTitle: 'Home'
             }
         })
         // details
-        .state('server', {
-            url: "/server",
-            templateUrl: "templates/server.html",
+        .state('server_details', {
+            url: "/server/:serverName",
+            params:{
+            	serverId: null
+            },
+            parent: 'dashboard',
+            templateUrl: "templates/dashboard/server.html",
             controller: 'ServerCtrl',
             data: {
                 pageTitle: 'Details'
             }
-        })
+        });
 };
 
 /**
  * Route configuration for the monitModule module.
  */
-angular.module('monitApp').config(configState);
+angular.module('monitApp')
+.config(configState)
+.config(function ($httpProvider) {
+  	$httpProvider.interceptors.push('AuthInterceptor');
+})
+.run(function($rootScope, $state, AuthService, AUTH_EVENTS, $cookieStore) {
+    $rootScope.$state = $state;
+    $rootScope.globals = $cookieStore.get('globals') || {};
+    $rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
+        if (!AuthService.isAuthenticated()) {
+            if (next.name !== 'login') {
+                event.preventDefault();
+                $state.go('login');
+            }
+        }
+    });
+});

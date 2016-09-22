@@ -6,6 +6,7 @@
       'ui.bootstrap',             // AngularJS native directives for Bootstrap
       'ngAnimate',                 // Angular animations
       'btford.socket-io',
-      'ngCookies'
+      'ngCookies',
+      'chart.js'
   ])
 })();

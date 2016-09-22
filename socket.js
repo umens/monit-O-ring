@@ -3,8 +3,27 @@ var Data   = require('./app/models/data');
 
 module.exports.connect = function(io){
 
+    var servers = [];
+
+    setInterval(function() {
+
+        Host.find().exec( function(err, hosts) {
+            if (err)
+                res.send(err);
+            io.emit('serves_refresh', hosts);
+        });
+
+    }, 15000);
+
     io.on('connection', function (socket) {
         var db_host = null;
+
+        socket.on('identifier', function (data) {
+            var clientSocketInfo = new Object();
+            clientSocketInfo.customId     = data.serverName;
+            clientSocketInfo.clientId     = socket.id;
+            servers.push(clientSocketInfo);
+        });
 
         socket.on('ressources', function(data) {
             Host.findOne({ name: data.hostname }, function (err, host) {
@@ -70,6 +89,27 @@ module.exports.connect = function(io){
                     });
                 }
             });
+        });
+
+        socket.once('disconnect', function (data) {
+            for( var i=0, len=servers.length; i<len; ++i ){
+                var c = servers[i];
+
+                if(c.clientId == socket.id){
+                    servers.splice(i,1);
+                    Host.findOne({ name: c.customId }, function (err, host) {
+                        host.lastTimeUp = Date.now();
+                        host.status = false;
+                        db_host = host;
+                        host.save(function(err) {
+                            if (err) throw err;
+                        });
+                    });
+                    socket.broadcast.emit('lost_connection', {host: c.customId});
+                    break;
+                }
+            }
+
         });
     });
 };

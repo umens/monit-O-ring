@@ -1,34 +1,16 @@
+# Created by https://www.gitignore.io/api/linux,macos,windows,sublimetext,node,bower
 
-# Created by https://www.gitignore.io/api/sublimetext,macos,linux,windows
+### Linux ###
+*~
 
-### SublimeText ###
-# cache files for sublime text
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.stTheme.cache
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
 
-# workspace files are user-specific
-*.sublime-workspace
+# KDE directory preferences
+.directory
 
-# project files should be checked into the repository, unless a significant
-# proportion of contributors will probably not be using SublimeText
-# *.sublime-project
-
-# sftp configuration file
-sftp-config.json
-
-# Package control specific files
-Package Control.last-run
-Package Control.ca-list
-Package Control.ca-bundle
-Package Control.system-ca-bundle
-Package Control.cache/
-Package Control.ca-certs/
-bh_unicode_properties.cache
-
-# Sublime-github package stores a github token in this file
-# https://packagecontrol.io/packages/sublime-github
-GitHub.sublime-settings
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
 
 
 ### macOS ###
@@ -60,19 +42,6 @@ Temporary Items
 .apdisk
 
 
-### Linux ###
-*~
-
-# temporary files which can be created if a process still has a handle open of a deleted file
-.fuse_hidden*
-
-# KDE directory preferences
-.directory
-
-# Linux trash folder which might appear on any partition or disk
-.Trash-*
-
-
 ### Windows ###
 # Windows image file caches
 Thumbs.db
@@ -92,6 +61,37 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+
+### SublimeText ###
+# cache files for sublime text
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+
+# workspace files are user-specific
+*.sublime-workspace
+
+# project files should be checked into the repository, unless a significant
+# proportion of contributors will probably not be using SublimeText
+# *.sublime-project
+
+# sftp configuration file
+sftp-config.json
+
+# Package control specific files
+Package Control.last-run
+Package Control.ca-list
+Package Control.ca-bundle
+Package Control.system-ca-bundle
+Package Control.cache/
+Package Control.ca-certs/
+bh_unicode_properties.cache
+
+# Sublime-github package stores a github token in this file
+# https://packagecontrol.io/packages/sublime-github
+GitHub.sublime-settings
+
 
 ### Node ###
 # Logs
@@ -136,5 +136,11 @@ jspm_packages
 # Optional REPL history
 .node_repl_history
 
+
+### Bower ###
+/front_src/components
+.bower-cache
+.bower-registry
+.bower-tmp
+
 /public/*
-/front_src/components/*

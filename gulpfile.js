@@ -1,16 +1,21 @@
-var gulp = require('gulp'),
-    usemin = require('gulp-usemin'),
-    wrap = require('gulp-wrap'),
-    connect = require('gulp-connect'),
-    watch = require('gulp-watch'),
-    minifyCss = require('gulp-cssnano'),
-    minifyJs = require('gulp-uglify'),
-    concat = require('gulp-concat'),
-    less = require('gulp-less'),
-    rename = require('gulp-rename'),
-    minifyHTML = require('gulp-htmlmin'),
-    order = require("gulp-order"),
-    print = require('gulp-print');
+var gulp       = require('gulp'),
+	usemin     = require('gulp-usemin'),
+	wrap       = require('gulp-wrap'),
+	connect    = require('gulp-connect'),
+	watch      = require('gulp-watch'),
+	minifyCss  = require('gulp-cssnano'),
+	minifyJs   = require('gulp-uglify'),
+	concat     = require('gulp-concat'),
+	less       = require('gulp-less'),
+	rename     = require('gulp-rename'),
+	minifyHTML = require('gulp-htmlmin'),
+	order      = require("gulp-order"),
+	print      = require('gulp-print'),
+	sourcemaps = require('gulp-sourcemaps'),
+	debug      = require('gulp-debug-streams'),
+	gutil      = require('gulp-util')
+	cleanCSS   = require('gulp-clean-css')
+	plumber    = require('gulp-plumber');
 
 var paths = {
     scripts: 'front_src/js/**/*.*',
@@ -18,6 +23,8 @@ var paths = {
     images: 'front_src/img/**/*.*',
     templates: 'front_src/templates/**/*.html',
     index: 'front_src/index.html',
+    not_found: 'front_src/404.html',
+    favicon: 'front_src/favicon.ico',
     bower_fonts: 'front_src/components/**/*.{ttf,woff,woff2,eof,svg,otf,eot}',
 };
 
@@ -26,17 +33,29 @@ var paths = {
  */
 gulp.task('usemin', function() {
     return gulp.src(paths.index)
+    	.pipe(plumber())
         .pipe(usemin({
-            js: [minifyJs(), 'concat'],
-            css: [minifyCss({keepSpecialComments: 0}), 'concat'],
+            js: [
+            	sourcemaps.init({loadMaps: true}),
+		        'concat',
+		        minifyJs(),
+            	sourcemaps.write('')
+            ],
+            css: [
+            	sourcemaps.init({loadMaps: true}),
+            	'concat',
+            	cleanCSS(),
+                sourcemaps.write(''),
+            ]
         }))
+        .pipe(debug())
         .pipe(gulp.dest('public/'));
 });
 
 /**
  * Copy assets
  */
-gulp.task('build-assets', ['copy-bower_fonts']);
+gulp.task('build-assets', ['copy-bower_fonts', 'copy-not_found', 'copy-favicon']);
 
 gulp.task('copy-bower_fonts', function() {
     return gulp.src(paths.bower_fonts)
@@ -44,6 +63,14 @@ gulp.task('copy-bower_fonts', function() {
             dirname: '/fonts'
         }))
         .pipe(gulp.dest('public/lib'));
+});
+gulp.task('copy-not_found', function() {
+    return gulp.src(paths.not_found)
+        .pipe(gulp.dest('public/'));
+});
+gulp.task('copy-favicon', function() {
+    return gulp.src(paths.favicon)
+    	.pipe(gulp.dest('public/'));
 });
 
 /**
@@ -66,7 +93,9 @@ gulp.task('custom-js', function() {
             "front_src/js/factories/*.js",
             "front_src/js/filters/*.js",
             "front_src/js/directives/*.js",
+            "front_src/js/services/*.js",
         ], { base: './' }))
+        //.pipe(sourcemaps.init())
         //.pipe(minifyJs())
         .pipe(concat('dashboard.min.js'))
         .pipe(gulp.dest('public/js'));
@@ -128,8 +157,8 @@ gulp.task('debug', ['build-dev', 'webserver', 'livereload', 'watch-dev']);
 gulp.task('usemin-debug', function() {
     return gulp.src(paths.index)
         .pipe(usemin({
-            js: ['concat'],
-            css: [minifyCss({keepSpecialComments: 0}), 'concat'],
+            js: ['concat', minifyJs()],
+            css: ['concat', cleanCSS()],
         }))
         .pipe(gulp.dest('public/'));
 });

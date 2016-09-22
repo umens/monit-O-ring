@@ -6,7 +6,7 @@ angular
     .module('monitApp')
     .controller('MasterCtrl', MasterCtrl);
 
-function MasterCtrl($scope, $cookieStore, alertService, $rootScope) {
+function MasterCtrl($scope, $cookieStore, alertService, $rootScope, $state, AuthService, AUTH_EVENTS, socket) {
     /**
      * Sidebar Toggle & Cookie Control
      */
@@ -39,4 +39,16 @@ function MasterCtrl($scope, $cookieStore, alertService, $rootScope) {
     };
     
     $rootScope.closeAlert = alertService.closeAlert;
+
+    $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
+		AuthService.logout();
+		$state.go('login');
+		toastr.warning('Session Lost', 'Sorry, You have to login again.');
+	});
+
+    $scope.logout = function() {
+        socket.disconnect();
+        AuthService.logout();
+        $state.go('login');
+    };
 }
