@@ -7,6 +7,7 @@
       'ngAnimate',                 // Angular animations
       'btford.socket-io',
       'ngCookies',
-      'chart.js'
+      'chart.js',
+      'ui.knob'
   ])
 })();

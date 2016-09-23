@@ -17,11 +17,6 @@ module.exports = function(app) {
     app.get('/api/servers', passport.authenticate('jwt', { session: false}), function(req, res) {
         var hosts = [];
         Host.find().exec( function(err, hosts) {
-            // servers.forEach(function(entry) {
-            //     Data.find({'host': entry._id}).sort( { added: -1 } ).limit( 1 ).populate('host').exec( function ( err, data ){
-            //         hosts.push(data);
-            //     });
-            // });
             if (err)
                 res.send(err);
             res.json(hosts); // return all hosts in JSON format

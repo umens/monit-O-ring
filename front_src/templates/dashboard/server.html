@@ -1,2 +1,19 @@
 <!-- <button type="button" ng-click="addAlert()" class="btn btn-success">Success</button> -->
-	<pre>{{ host }}</pre>
+<pre>{{ host }}</pre>
+<div class="row">
+	<div class="col-md-12">
+		<h2>{{ host.name }}</h2>
+	</div>
+</div>
+<div class="row">
+  	<div class="col-md-6">
+		<div class="text-center">
+			<ui-knob value="liveCPU" options="liveCpuOptions"></ui-knob>
+		</div>
+  	</div>
+  	<div class="col-md-6">
+  		<div class="text-center">
+			<ui-knob value="liveMemory" options="liveMemoryOptions"></ui-knob>
+		</div>
+  	</div>
+</div>
