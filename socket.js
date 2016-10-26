@@ -44,7 +44,7 @@ module.exports.connect = function(io){
                 });
                 datas.save(function(err) {
                     if (err) throw err;
-                    socket.broadcast.emit('ressources', {host: db_host, datas: data});
+                    socket.in(data.hostname).emit('ressources', {host: db_host, datas: data, added: Date.now()});
                 });
             });
         });
@@ -111,5 +111,15 @@ module.exports.connect = function(io){
             }
 
         });
+
+        // once a client has connected, we expect to get a ping from them saying what room they want to join
+	    socket.on('join', function(room) {
+	        socket.join(room);
+	    });
+
+	    socket.on('leave', function(room) {
+	        socket.leave(room);
+	    });
+        
     });
 };

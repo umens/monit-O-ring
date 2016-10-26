@@ -32,10 +32,7 @@ function configState($stateProvider, $urlRouterProvider, $compileProvider) {
         })
         // details
         .state('server_details', {
-            url: "/server/:serverName",
-            params:{
-            	serverId: null
-            },
+            url: "/server/:serverId-:serverName",
             parent: 'dashboard',
             templateUrl: "templates/dashboard/server.html",
             controller: 'ServerCtrl',

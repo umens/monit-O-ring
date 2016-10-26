@@ -1,19 +1,35 @@
 <!-- <button type="button" ng-click="addAlert()" class="btn btn-success">Success</button> -->
-<pre>{{ host }}</pre>
-<div class="row">
-	<div class="col-md-12">
-		<h2>{{ host.name }}</h2>
-	</div>
+<div class="page-header">
+  	<h1>Monitoring <small>{{ host.name }}</small></h1>
 </div>
-<div class="row">
-  	<div class="col-md-6">
-		<div class="text-center">
-			<ui-knob value="liveCPU" options="liveCpuOptions"></ui-knob>
+<div class="panel panel-default">
+  	<div class="panel-heading">CPU</div>
+  	<div class="panel-body">
+    	<div class="row">
+		  	<div class="col-md-4">
+				<div class="text-center">
+					<ui-knob value="liveCPU" options="liveCpuOptions"></ui-knob>
+				</div>
+		  	</div>
+		  	<div class="col-md-8">
+				<canvas id="line" class="chart chart-line" chart-data="data_cpu" chart-series="seriesCPU" chart-options="optionsCPUChart"></canvas>
+		  	</div>
 		</div>
   	</div>
-  	<div class="col-md-6">
-  		<div class="text-center">
-			<ui-knob value="liveMemory" options="liveMemoryOptions"></ui-knob>
+</div>
+
+<div class="panel panel-default">
+  	<div class="panel-heading">Memory</div>
+  	<div class="panel-body">
+    	<div class="row">
+		  	<div class="col-md-4">
+				<div class="text-center">
+					<ui-knob value="liveMemory" options="liveMemoryOptions"></ui-knob>
+				</div>
+		  	</div>
+		  	<div class="col-md-8">
+				<canvas id="line" class="chart chart-line" chart-data="data_memory" chart-series="seriesMemory" chart-options="optionsMemoryChart"></canvas>
+		  	</div>
 		</div>
   	</div>
 </div>

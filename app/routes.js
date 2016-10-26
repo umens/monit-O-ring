@@ -24,7 +24,7 @@ module.exports = function(app) {
     });
 
     app.get('/api/server/:id', passport.authenticate('jwt', { session: false}), function(req, res) {
-        Data.find({'host': req.params.id}).sort( { added: -1 } ).limit( 1000 ).populate('host').exec( function ( err, datas ){
+        Data.find({'host': req.params.id}).sort( { added: -1 } ).limit( 150 ).populate('host').exec( function ( err, datas ){
         	if (err)
             	res.send(err);
             res.json(datas); // return the specifique host in JSON format

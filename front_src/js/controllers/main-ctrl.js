@@ -16,10 +16,6 @@ function MainController($scope, socket, $http, CONFIG) {
         }
         $scope.displayableHosts = newArr;
     });
-  
-    socket.on('ressources', function (data) {
-      	console.log(data);
-    });
 
     // when landing on the page, get all todos and show them
     $http.get('/api/servers')
@@ -35,13 +31,19 @@ function MainController($scope, socket, $http, CONFIG) {
     });
 
     socket.on('ehlo', function (data) {
-        if(!foundInArray(data.host.name)){
-            $scope.hosts.push(data.host);
+        if(foundInArray(data.host.name)){
+            var hostId = getHost(data.host.name);
+        	$scope.hosts[hostId].status = true;
+        }
+        else{
+        	$scope.hosts.push(data.host);
         }
     });
 
     socket.on('lost_connection', function (data) {
         if(foundInArray(data.host)){
+        	var hostId = getHost(data.host);
+        	$scope.hosts[hostId].status = false;
             swal({
 			  	title: 'Server Down!',
 			  	text: data.host+' just crash ! Fix it ASAP.',
@@ -60,6 +62,17 @@ function MainController($scope, socket, $http, CONFIG) {
             }
         });
         return find;
+    }
+
+    function getHost(host_name){
+        var host = {};
+        $scope.hosts.forEach(function(entry, index) {
+            /* iterate through array or object */
+            if(entry.name == host_name){
+                host = index;
+            }
+        });
+        return host;
 
     }
 };
